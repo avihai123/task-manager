@@ -19,7 +19,7 @@ import {Task} from '../../models/task.model';
       </app-task-inline-item>
       </div>
       <ul>
-        <li *ngFor="let subTaskId of task.subTaskIds">
+        <li *ngFor="let subTaskId of task.subTaskIds; trackBy: trackByFn">
           <app-task-node
             [parentId]="task.id"
             [taskId]="subTaskId">
@@ -45,5 +45,9 @@ export class TaskNodeComponent implements OnInit {
     if (remove) {
       this.store.dispatch(new fromStore.RemoveTask(event.id));
     }
+  }
+
+  trackByFn(index, item) {
+    return item.id;
   }
 }
