@@ -1,16 +1,54 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {Routes, RouterModule} from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {environment} from '../environments/environment';
 
-import { AppComponent } from './app.component';
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer,
+} from '@ngrx/router-store';
+import {StoreModule, MetaReducer} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+
+import {reducers, effects, CustomSerializer} from './store';
+
+// not used in production
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {storeFreeze} from 'ngrx-store-freeze';
+
+export const metaReducers: MetaReducer<any>[] = !environment.production
+  ? [storeFreeze]
+  : [];
+
+// bootstrap
+import {AppComponent} from './containers/app/app.component';
+import {TasksModule} from './tasks/tasks.module';
+import {InMemoryDataService} from './in-memory-data.service';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+
+// routes
+export const ROUTES: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'tasks'},
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    TasksModule,
+    RouterModule.forRoot(ROUTES),
+    StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot(effects),
+    StoreRouterConnectingModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, {dataEncapsulation: false}
+    ),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{provide: RouterStateSerializer, useClass: CustomSerializer}],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}
