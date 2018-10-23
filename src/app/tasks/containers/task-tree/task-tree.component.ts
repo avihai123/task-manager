@@ -16,7 +16,7 @@ import * as fromStore from '../../store';
           mat-icon-button
           [routerLink]="['/tasks/new']"
           [queryParams]="{parentId: (task$ | async)?.id}"
-          matTooltip="Add new sub task">
+          matTooltip="Add new task">
           <mat-icon>add</mat-icon>
         </button>
       </div>

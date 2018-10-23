@@ -1,33 +1,22 @@
-import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {CanActivate} from '@angular/router';
 
-import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { tap, filter, take, switchMap, catchError } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {Observable, of} from 'rxjs';
+import {switchMap, catchError} from 'rxjs/operators';
 
 import * as fromStore from '../store';
+import {checkStoreLoaded} from './helpers';
 
 @Injectable()
 export class TasksGuard implements CanActivate {
-  constructor(private store: Store<fromStore.TasksState>) {}
-
-  canActivate(): Observable<boolean> {
-    return this.checkStore().pipe(
-      switchMap(() => of(true)),
-      catchError(() => of(false))
-    );
+  constructor(private store: Store<fromStore.TasksState>) {
   }
 
-  // TODO: Duplicate.
-  checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getTasksLoaded).pipe(
-      tap(loaded => {
-        if (!loaded) {
-          this.store.dispatch(new fromStore.LoadTasks());
-        }
-      }),
-      filter(loaded => loaded),
-      take(1)
+  canActivate(): Observable<boolean> {
+    return checkStoreLoaded(this.store).pipe(
+      switchMap(() => of(true)),
+      catchError(() => of(false))
     );
   }
 }

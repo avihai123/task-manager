@@ -4,17 +4,18 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { tap, map, filter, take, switchMap } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 import * as fromStore from '../store';
 
 import { Task } from '../models/task.model';
+import {checkStoreLoaded} from './helpers';
 
 @Injectable()
 export class TaskExistsGuards implements CanActivate {
   constructor(private store: Store<fromStore.TasksState>) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.checkStore().pipe(
+    return checkStoreLoaded(this.store).pipe(
       switchMap(() => {
         const id = parseInt(route.params.taskId, 10);
         return this.hasTask(id);
@@ -29,17 +30,5 @@ export class TaskExistsGuards implements CanActivate {
         map((entities: { [key: number]: Task }) => !!entities[id]),
         take(1)
       );
-  }
-
-  private checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getTasksLoaded).pipe(
-      tap(loaded => {
-        if (!loaded) {
-          this.store.dispatch(new fromStore.LoadTasks());
-        }
-      }),
-      filter(loaded => loaded),
-      take(1)
-    );
   }
 }
