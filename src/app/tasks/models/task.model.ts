@@ -1,9 +1,4 @@
-export enum TaskStatus {
-  NOT_STARTED = 'Not started',
-  STARTED = 'Started',
-  COMPLETE = 'Complete',
-}
-
+import {TaskStatus} from './task-status.model';
 
 export interface Task {
   id: number;
