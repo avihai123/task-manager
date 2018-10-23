@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ViewChild, ElementRef,
 } from '@angular/core';
 import {
   FormControl,
@@ -14,7 +14,8 @@ import {
   Validators,
 } from '@angular/forms';
 
-import {Task, TaskStatus} from '../../models/task.model';
+import {Task} from '../../models/task.model';
+import {TaskStatus} from '../../models/task-status.model';
 
 @Component({
   selector: 'app-task-form',
@@ -26,7 +27,7 @@ import {Task, TaskStatus} from '../../models/task.model';
       <h2 *ngIf="!exists">Create New Task</h2>
       <form [formGroup]="form">
           <mat-form-field>
-            <input matInput
+            <input #title matInput
               type="text"
               formControlName="title"
               placeholder="Add a title..."
@@ -90,6 +91,8 @@ export class TaskFormComponent implements OnChanges {
   @Output() update = new EventEmitter<Task>();
   @Output() remove = new EventEmitter<Task>();
 
+  @ViewChild('title') titleField: ElementRef;
+
   form = this.fb.group({
     title: ['', Validators.compose([Validators.required])],
     description: [''],
@@ -112,6 +115,7 @@ export class TaskFormComponent implements OnChanges {
       this.form.patchValue(this.task);
     } else {
       this.form.patchValue(({'status': TaskStatus.NOT_STARTED}));
+      this.titleField.nativeElement.focus();
     }
   }
 
