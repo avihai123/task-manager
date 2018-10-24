@@ -27,9 +27,12 @@
     }
   }
   &__status {
-    background: cornsilk;
-    font-size: 0.8em;
-    border-radius: 20px;
-    padding: 3px;
+    .mat-icon{
+      vertical-align: middle;
+    }
+    //background: cornsilk;
+    //font-size: 0.8em;
+    //border-radius: 20px;
+    //padding: 3px;
   }
 }

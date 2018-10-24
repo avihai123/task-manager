@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 
 import {Task} from '../../models/task.model';
-import {TaskStatus} from '../../models/task-status.model';
+import {TaskStatuses, TaskStatusNotStarted} from '../../constants';
 
 @Component({
   selector: 'app-task-form',
@@ -38,10 +38,11 @@ import {TaskStatus} from '../../models/task-status.model';
         <mat-form-field>
           <mat-select
             placeholder="Status"
-            formControlName="status"
-            name="status">
-            <mat-option *ngFor="let status of taskStatuses" value="{{status[1]}}">
-              {{status[1]}}
+            formControlName="statusId"
+            name="statusId">
+            <mat-option *ngFor="let status of taskStatuses"
+                        [value]="status.id">
+              {{status.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -83,7 +84,7 @@ import {TaskStatus} from '../../models/task-status.model';
   `,
 })
 export class TaskFormComponent implements OnChanges {
-  readonly taskStatuses = Object.entries(TaskStatus);
+  readonly taskStatuses = Array.from(TaskStatuses.values());
 
   @Input() task: Task;
   @Input() exists: boolean;
@@ -96,7 +97,7 @@ export class TaskFormComponent implements OnChanges {
   form = this.fb.group({
     title: ['', Validators.compose([Validators.required])],
     description: [''],
-    status: ['', Validators.required],
+    statusId: ['', Validators.required],
   });
 
   constructor(private fb: FormBuilder) {
@@ -114,7 +115,7 @@ export class TaskFormComponent implements OnChanges {
     if (this.task && this.task.id) {
       this.form.patchValue(this.task);
     } else {
-      this.form.patchValue(({'status': TaskStatus.NOT_STARTED}));
+      this.form.patchValue(({'statusId': TaskStatusNotStarted.id}));
       this.titleField.nativeElement.focus();
     }
   }

@@ -4,7 +4,7 @@ export interface Task {
   id: number;
   title: string;
   description: string | null;
-  status: TaskStatus;
+  statusId: number;
   parentId?: number | null;
   subTaskIds: number[];
 }

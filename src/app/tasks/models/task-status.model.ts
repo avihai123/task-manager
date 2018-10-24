@@ -1,5 +1,6 @@
-export enum TaskStatus {
-  NOT_STARTED = 'Not started',
-  STARTED = 'Started',
-  COMPLETE = 'Completed',
+export interface TaskStatus {
+  id: number;
+  icon: string;
+  name: string;
+  cls: string;
 }

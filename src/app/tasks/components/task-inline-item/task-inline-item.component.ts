@@ -1,6 +1,8 @@
-import {Component, ChangeDetectionStrategy, Input, EventEmitter, Output} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, EventEmitter, Output, OnInit} from '@angular/core';
 
 import {Task} from '../../models/task.model';
+import {TaskStatuses} from '../../constants';
+import {TaskStatus} from '../../models/task-status.model';
 
 @Component({
   selector: 'app-task-inline-item',
@@ -10,7 +12,11 @@ import {Task} from '../../models/task.model';
     <div class="flex__between task-inline">
       <div class="task-inline__id">TASK-{{task.id}}</div>
       <div class="task-inline__title">{{task.title}}</div>
-      <div class="task-inline__status">{{task.status}}</div>
+      <div class="task-inline__status">
+        <mat-icon matTooltip="{{selectedStatus.name}}">
+                {{selectedStatus.icon}}
+        </mat-icon>
+      </div>
       <div class="task-inline__actions">
         <button mat-icon-button
                 matTooltip="Edit task"
@@ -26,10 +32,15 @@ import {Task} from '../../models/task.model';
     </div>
   `,
 })
-export class TaskInlineItemComponent {
+export class TaskInlineItemComponent implements OnInit{
+  private readonly taskStatuses = TaskStatuses;
+  selectedStatus: TaskStatus;
   @Input() task: Task;
   @Output() removeClick = new EventEmitter<number>();
 
+  ngOnInit() {
+    this.selectedStatus = this.taskStatuses.get(this.task.statusId);
+  };
   handleDeleteClick(id: number) {
     this.removeClick.emit(id);
   }

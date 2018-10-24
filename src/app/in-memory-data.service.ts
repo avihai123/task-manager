@@ -9,7 +9,7 @@ export class InMemoryDataService implements InMemoryDbService {
         parentId: null,
         title: 'Build task manager',
         description: 'build task manager',
-        status: 'Completed',
+        statusId: 1,
         subTaskIds: [],
       },
     ];
