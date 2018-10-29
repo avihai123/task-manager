@@ -8,27 +8,7 @@ import * as fromStore from '../../store';
   selector: 'app-task-tree',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['task-tree.component.scss'],
-  template: `
-    <div class="task-tree">
-      <div class="task__header flex__between">
-        <h2>Task Manager</h2>
-        <button
-          mat-icon-button
-          [routerLink]="['/tasks/new']"
-          [queryParams]="{parentId: (task$ | async)?.id}"
-          matTooltip="Add new task">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <ul>
-        <li *ngFor="let taskId of taskRootIds$ | async">
-          <app-task-node
-            [taskId]="taskId">
-          </app-task-node>
-        </li>
-      </ul>
-    </div>
-  `,
+  templateUrl: 'task-tree.component.html',
 })
 export class TaskTreeComponent implements OnInit {
   taskRootIds$: Observable<number[]>;

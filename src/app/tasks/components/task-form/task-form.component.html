@@ -1,0 +1,59 @@
+<div>
+  <h2 *ngIf="exists">Edit Task</h2>
+  <h2 *ngIf="!exists">Create New Task</h2>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <input #title matInput
+             type="text"
+             formControlName="title"
+             placeholder="Add a title..."
+             class="task-form__input"
+             [class.error]="titleControlInvalid">
+      <mat-error *ngIf="titleControlInvalid">Task must have a title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Status"
+        formControlName="statusId"
+        name="statusId">
+        <mat-option *ngFor="let status of taskStatuses"
+                    [value]="status.id">
+          {{status.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+            <textarea matInput
+                      type="text"
+                      formControlName="description"
+                      placeholder="Add a description..."
+                      class="task-form__input">
+            </textarea>
+    </mat-form-field>
+    <div class="task-form__actions">
+      <button mat-raised-button
+              type="button"
+              class="btn btn__ok"
+              *ngIf="!exists"
+              [disabled]="!form.valid || form.pristine"
+              (click)="createTask(form)">
+        Create task
+      </button>
+      <button mat-raised-button
+              type="button"
+              class="btn btn__ok"
+              *ngIf="exists"
+              [disabled]="!form.valid || form.pristine"
+              (click)="updateTask(form)">
+        Update task
+      </button>
+      <button mat-raised-button
+              type="button"
+              class="btn btn__warning"
+              *ngIf="exists"
+              (click)="removeTask(form)">
+        Delete Task
+      </button>
+    </div>
+  </form>
+</div>

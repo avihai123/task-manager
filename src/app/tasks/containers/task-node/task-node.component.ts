@@ -10,24 +10,7 @@ import {Task} from '../../models/task.model';
   selector: 'app-task-node',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['task-node.component.scss'],
-  template: `
-    <div class="task-node" *ngIf="task$ | async as task">
-      <div class="task-node__parent">
-        <app-task-inline-item
-        [task]="task"
-        (removeClick)="onRemove($event)">
-      </app-task-inline-item>
-      </div>
-      <ul>
-        <li *ngFor="let subTaskId of task.subTaskIds; trackBy: trackByFn">
-          <app-task-node
-            [parentId]="task.id"
-            [taskId]="subTaskId">
-          </app-task-node>
-        </li>
-      </ul>
-    </div>
-  `,
+  templateUrl: 'task-node.component.html',
 })
 export class TaskNodeComponent implements OnInit {
   @Input() taskId: number;

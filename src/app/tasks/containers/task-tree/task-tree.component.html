@@ -1,0 +1,18 @@
+<div class="task-tree">
+  <div class="task__header flex__between">
+    <h2>Task Manager</h2>
+    <button
+      mat-icon-button
+      [routerLink]="['/tasks/new']"
+      matTooltip="Add new task">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ul>
+    <li *ngFor="let taskId of taskRootIds$ | async">
+      <app-task-node
+        [taskId]="taskId">
+      </app-task-node>
+    </li>
+  </ul>
+</div>

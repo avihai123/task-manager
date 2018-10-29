@@ -12,36 +12,7 @@ import {ActivatedRoute} from '@angular/router';
   selector: 'app-task-details',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['task-details.component.scss'],
-  template: `
-    <div class="task-details">
-      <app-task-form
-        [task]="task$ | async"
-        [exists]="exists"
-        (create)="onCreate($event)"
-        (update)="onUpdate($event)"
-        (remove)="onRemove($event)"
-      >
-      </app-task-form>
-      <div class="sub-tasks" *ngIf="exists">
-        <div class="sub-tasks__header flex__between">
-          <h2>Sub Tasks</h2>
-          <button
-            mat-icon-button
-            [routerLink]="['/tasks/new']"
-            [queryParams]="{parentId: (task$ | async).id}"
-            matTooltip="Add new sub task">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-        <div *ngFor="let subTask of subTasks$ | async">
-          <app-task-inline-item
-            [task]="subTask"
-            (removeClick)="onRemove($event)">
-          </app-task-inline-item>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: 'task-details.component.html',
 })
 export class TaskDetailsComponent implements OnInit {
   exists = false;

@@ -21,67 +21,7 @@ import {TaskStatuses, TaskStatusNotStarted} from '../../constants';
   selector: 'app-task-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['task-form.component.scss'],
-  template: `
-    <div>
-      <h2 *ngIf="exists">Edit Task</h2>
-      <h2 *ngIf="!exists">Create New Task</h2>
-      <form [formGroup]="form">
-          <mat-form-field>
-            <input #title matInput
-              type="text"
-              formControlName="title"
-              placeholder="Add a title..."
-              class="task-form__input"
-              [class.error]="titleControlInvalid">
-            <mat-error *ngIf="titleControlInvalid">Task must have a title</mat-error>
-          </mat-form-field>
-        <mat-form-field>
-          <mat-select
-            placeholder="Status"
-            formControlName="statusId"
-            name="statusId">
-            <mat-option *ngFor="let status of taskStatuses"
-                        [value]="status.id">
-              {{status.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-          <mat-form-field>
-            <textarea matInput
-              type="text"
-              formControlName="description"
-              placeholder="Add a description..."
-              class="task-form__input">
-            </textarea>
-          </mat-form-field>
-        <div class="task-form__actions">
-          <button mat-raised-button
-            type="button"
-            class="btn btn__ok"
-            *ngIf="!exists"
-            [disabled]="!form.valid || form.pristine"
-            (click)="createTask(form)">
-            Create task
-          </button>
-          <button mat-raised-button
-            type="button"
-            class="btn btn__ok"
-            *ngIf="exists"
-            [disabled]="!form.valid || form.pristine"
-            (click)="updateTask(form)">
-            Update task
-          </button>
-          <button mat-raised-button
-            type="button"
-            class="btn btn__warning"
-            *ngIf="exists"
-            (click)="removeTask(form)">
-            Delete Task
-          </button>
-        </div>
-      </form>
-    </div>
-  `,
+  templateUrl: 'task-form.component.html',
 })
 export class TaskFormComponent implements OnChanges {
   readonly taskStatuses = Array.from(TaskStatuses.values());
@@ -95,9 +35,9 @@ export class TaskFormComponent implements OnChanges {
   @ViewChild('title') titleField: ElementRef;
 
   form = this.fb.group({
-    title: ['', Validators.compose([Validators.required])],
+    title: ['', [Validators.required]],
     description: [''],
-    statusId: ['', Validators.required],
+    statusId: [TaskStatusNotStarted.id, Validators.required],
   });
 
   constructor(private fb: FormBuilder) {
@@ -115,7 +55,6 @@ export class TaskFormComponent implements OnChanges {
     if (this.task && this.task.id) {
       this.form.patchValue(this.task);
     } else {
-      this.form.patchValue(({'statusId': TaskStatusNotStarted.id}));
       this.titleField.nativeElement.focus();
     }
   }
