@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Routes, RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -13,34 +12,17 @@ import * as fromContainers from './containers';
 import * as fromGuards from './guards';
 import * as fromServices from './services';
 import {
-  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatTooltipModule,
+  MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatTooltipModule,
 } from '@angular/material';
+import {TasksRoutingModule} from './tasks-routing.module';
 
-// routes
-export const ROUTES: Routes = [
-  {
-    path: 'tasks',
-    canActivate: [fromGuards.TasksGuard],
-    component: fromContainers.TaskTreeComponent
-  },
-  {
-    path: 'tasks/new',
-    canActivate: [fromGuards.TasksGuard],
-    component: fromContainers.TaskDetailsComponent,
-  },
-  {
-    path: 'tasks/:taskId',
-    canActivate: [fromGuards.TaskExistsGuards],
-    component: fromContainers.TaskDetailsComponent,
-  },
-];
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forChild(ROUTES),
+    TasksRoutingModule,
     StoreModule.forFeature('tasks', reducers),
     EffectsModule.forFeature(effects),
     MatButtonModule,

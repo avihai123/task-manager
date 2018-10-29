@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {Routes, RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 
@@ -26,18 +25,15 @@ import {AppComponent} from './containers/app/app.component';
 import {TasksModule} from './tasks/tasks.module';
 import {InMemoryDataService} from './in-memory-data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {AppRoutingModule} from './app-routing.module';
 
-// routes
-export const ROUTES: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'tasks'},
-];
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     TasksModule,
-    RouterModule.forRoot(ROUTES),
+    AppRoutingModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
