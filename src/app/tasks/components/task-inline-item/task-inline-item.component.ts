@@ -10,7 +10,7 @@ import {TaskStatus} from '../../models/task-status.model';
   styleUrls: ['task-inline-item.component.scss'],
   templateUrl: 'task-inline-item.component.html',
 })
-export class TaskInlineItemComponent implements OnInit{
+export class TaskInlineItemComponent implements OnInit {
   private readonly taskStatuses = TaskStatuses;
   selectedStatus: TaskStatus;
   @Input() task: Task;
@@ -18,7 +18,7 @@ export class TaskInlineItemComponent implements OnInit{
 
   ngOnInit() {
     this.selectedStatus = this.taskStatuses.get(this.task.statusId);
-  };
+  }
   handleDeleteClick(id: number) {
     this.removeClick.emit(id);
   }

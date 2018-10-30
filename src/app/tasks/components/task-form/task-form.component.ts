@@ -30,7 +30,6 @@ export class TaskFormComponent implements OnChanges {
   @Input() exists: boolean;
   @Output() create = new EventEmitter<Task>();
   @Output() update = new EventEmitter<Task>();
-  @Output() remove = new EventEmitter<Task>();
 
   @ViewChild('title') titleField: ElementRef;
 
@@ -73,10 +72,5 @@ export class TaskFormComponent implements OnChanges {
       this.update.emit({...this.task, ...value});
       form.markAsPristine();
     }
-  }
-
-  removeTask(form: FormGroup) {
-    const {value} = form;
-    this.remove.emit({...this.task, ...value});
   }
 }

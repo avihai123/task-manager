@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 // routes
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'tasks'},
+  // {path: '**', component: PageNotFound},
 ];
 
 @NgModule({
