@@ -5,6 +5,7 @@
       (removeClick)="onRemove($event)">
     </app-task-inline-item>
   </div>
+
   <ul>
     <li *ngFor="let subTaskId of task.subTaskIds; trackBy: trackByFn">
       <app-task-node

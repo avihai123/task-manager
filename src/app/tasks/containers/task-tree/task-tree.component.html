@@ -8,11 +8,23 @@
       <mat-icon>add</mat-icon>
     </button>
   </div>
-  <ul>
+
+  <ng-container
+    *ngIf="isLoading$ | async; then isLoading else loaded">
+  </ng-container>
+
+  <ng-template #isLoading>
+    <div>
+      Loading...
+    </div>
+  </ng-template>
+  <ng-template #loaded>
+     <ul>
     <li *ngFor="let taskId of taskRootIds$ | async">
       <app-task-node
         [taskId]="taskId">
       </app-task-node>
     </li>
   </ul>
+  </ng-template>
 </div>
