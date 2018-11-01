@@ -13,7 +13,7 @@ export class InMemoryDataService implements InMemoryDbService {
     //     subTaskIds: [],
     //   },
     // ];
-    const tasks = generateDummy();
+    const tasks = generateTree();
     return {tasks};
   }
   genId(tasks: Task[]): number {
@@ -21,7 +21,7 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 }
 
-function generateDummy(){
+function generateTree() {
   const n = 5;
   const tasks = [];
   for (let i = 1; i <= n; i++) {
