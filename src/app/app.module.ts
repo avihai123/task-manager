@@ -25,8 +25,9 @@ import {AppComponent} from './containers/app/app.component';
 import {TasksModule} from './tasks/tasks.module';
 import {InMemoryDataService} from './in-memory-data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {AppRoutingModule} from './app-routing.module';
 
+import {AppRoutingModule} from './app-routing.module';
+import {ModalComponent} from './components/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import {AppRoutingModule} from './app-routing.module';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [{provide: RouterStateSerializer, useClass: CustomSerializer}],
-  declarations: [AppComponent],
+  declarations: [AppComponent, ModalComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {
