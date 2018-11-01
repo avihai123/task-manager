@@ -1,12 +1,12 @@
 <div class="task-node" *ngIf="task$ | async as task">
-  <div class="task-node__parent">
+  <div class="task-node__item">
     <app-task-inline-item
       [task]="task"
       (removeClick)="onRemove($event)">
     </app-task-inline-item>
   </div>
 
-  <ul>
+  <ul *ngIf="task.subTaskIds.length > 0">
     <li *ngFor="let subTaskId of task.subTaskIds; trackBy: trackByFn">
       <app-task-node
         [parentId]="task.id"

@@ -19,12 +19,12 @@
     </div>
   </ng-template>
   <ng-template #loaded>
-     <ul>
-    <li *ngFor="let taskId of taskRootIds$ | async">
-      <app-task-node
-        [taskId]="taskId">
-      </app-task-node>
-    </li>
-  </ul>
+    <ul>
+      <li *ngFor="let taskId of taskRootIds$ | async">
+        <app-task-node
+          [taskId]="taskId">
+        </app-task-node>
+      </li>
+    </ul>
   </ng-template>
 </div>

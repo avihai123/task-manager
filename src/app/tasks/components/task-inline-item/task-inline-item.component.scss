@@ -28,11 +28,11 @@
   }
   &__status {
     .mat-icon{
-      vertical-align: middle;
+      vertical-align: top;
     }
-    //background: cornsilk;
-    //font-size: 0.8em;
-    //border-radius: 20px;
-    //padding: 3px;
+    background: cornsilk;
+    font-size: 0.7em;
+    border-radius: 20px;
+    padding: 5px;
   }
 }

@@ -2,9 +2,8 @@
   <div class="task-inline__id">TASK-{{task.id}}</div>
   <div class="task-inline__title">{{task.title}}</div>
   <div class="task-inline__status">
-    <mat-icon matTooltip="{{selectedStatus.name}}">
-      {{selectedStatus.icon}}
-    </mat-icon>
+    <mat-icon [inline]="true">{{selectedStatus.icon}}</mat-icon>
+    <span>{{selectedStatus.name}}</span>
   </div>
   <div class="task-inline__actions">
     <button mat-icon-button
