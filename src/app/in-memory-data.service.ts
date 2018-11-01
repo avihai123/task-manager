@@ -13,8 +13,8 @@ export class InMemoryDataService implements InMemoryDbService {
 }
 
 function generateTree() {
-  const tree = [];
-  for (let i = 0; i < 25; i++) {
+  const tree = {};
+  for (let i = 1; i < 25; i++) {
     let parentId = Math.floor(Math.pow(Math.random(), 2) * i);
 
     if (parentId === 0) {
@@ -22,13 +22,13 @@ function generateTree() {
     } else {
       tree[parentId].subTaskIds.push(i);
     }
-    tree.push({
+    tree[i] = {
       parentId: parentId,
       id: i,
       title: `Task ${i}`,
       statusId: 1,
       subTaskIds: []
-    });
+    };
   }
-  return tree;
+  return Object.values(tree);
 }
